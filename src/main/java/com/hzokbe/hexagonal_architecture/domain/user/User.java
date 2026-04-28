@@ -3,7 +3,7 @@ package com.hzokbe.hexagonal_architecture.domain.user;
 import java.util.UUID;
 
 public class User {
-    private final UUID id = UUID.randomUUID();
+    private final UUID id;
 
     private final String username;
 
@@ -28,9 +28,37 @@ public class User {
             throw new IllegalArgumentException("password hash cannot be blank");
         }
 
+        id = UUID.randomUUID();
+
         this.username = username;
 
         this.passwordHash = passwordHash;
+    }
+
+    public User(UUID id, String username, String passwordHash, boolean isActive) {
+        if (username == null) {
+            throw new IllegalArgumentException("username cannot be null");
+        }
+
+        if (username.isBlank()) {
+            throw new IllegalArgumentException("username cannot be blank");
+        }
+
+        if (passwordHash == null) {
+            throw new IllegalArgumentException("password hash cannot be null");
+        }
+
+        if (passwordHash.isBlank()) {
+            throw new IllegalArgumentException("password hash cannot be blank");
+        }
+
+        this.id = id;
+
+        this.username = username;
+
+        this.passwordHash = passwordHash;
+
+        this.isActive = isActive;
     }
 
     public UUID getId() {
@@ -43,6 +71,10 @@ public class User {
 
     public String getPasswordHash() {
         return passwordHash;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     public void changePassword(String passwordHash) {
